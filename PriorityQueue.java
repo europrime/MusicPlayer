@@ -10,18 +10,21 @@ public class PriorityQueue {
 	int front = 0;
 	int rear = 0;
 	int size = 0;
-	int capacity;
+	int prority = 0;
+	int capacity = 30;
+	String albumName;
 	PriorityObject[] queueArray;
 	
 	//Constructor
-	public PriorityQueue(int capacity) {
-		this.capacity = capacity;
-		queueArray = new PriorityObject[capacity];
+	public PriorityQueue(String albumName) {
+		this.albumName = albumName;
+		queueArray = new PriorityObject[30];
 	}
 	
 	
 	//Inserts variable at the end of the queue
 	public void enqueue(Song song, int priority) {
+		priority++;
 		PriorityObject tempData = new PriorityObject(priority, song);
 		
 		if(priority == 0) {

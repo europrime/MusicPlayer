@@ -1,22 +1,31 @@
 public class Song{
 
+	//Characteristics of a song
     String name;
     String artist;
+    String genre;
     double songLength;
     int timesPlayed = 0;
 
-    public Song(String name, String artist, double songLength){
+    //Constructor
+    public Song(String name, String artist,String genre, double songLength){
         this.name = name;
         this.artist = artist;
+        this.genre = genre;
         this.songLength = songLength;
     }
 
+    //Getters and setters
     public String getName(){
         return name;
     }
 
     public String getArtist(){
         return artist;
+    }
+    
+    public String getGenre(){
+        return genre;
     }
     
     public int getTimePlayed(){
