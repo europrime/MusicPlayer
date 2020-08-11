@@ -17,7 +17,7 @@ public class MusicPlayer{
         while(true){
         	//Asking user to enter input
             System.out.println("Please select an option: \n");
-            System.out.println("1. Create an album\n2. Enter a ablum\n3. Display Albums\n4. Show Statistics\nn5. Exit");
+            System.out.println("1. Create an album\n2. Enter a ablum\n3. Display Albums\n4. Show Statistics\n5. Exit");
             int userInput = input.nextInt();
             input.nextLine();
             
