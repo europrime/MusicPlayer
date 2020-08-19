@@ -166,23 +166,71 @@ public class MusicPlayer{
 	}
 
 	public static void MostPlayedSong(PriorityQueue[] albumList, int entry){
+		int max = 0;
+		Song mostPlayed = null;
 		//displays most played song/s in album using total times played
 		System.out.println("Most played song: ");
 
 		//finds most played song or lists multiple if tie
+		for(int i = 0; i < 30; i++) {
+			albumList[entry].queueArray[i].song.timesPlayed = max;
+			albumList[entry].queueArray[i].song = mostPlayed;
+
+    		if(albumList[entry].queueArray[i] != null) {
+
+				//System.out.println(i + ". " + albumList[entry].queueArray[i].song.name);
+
+				if (albumList[entry].queueArray[i].song.timesPlayed > max){
+
+					albumList[entry].queueArray[i].song.timesPlayed = max;
+					albumList[entry].queueArray[i].song = mostPlayed;
+				}
+    		}
+		}
+		
+		System.out.println(mostPlayed);
 	}
 
 	public static void MostPlayedGenre(PriorityQueue[] albumList, int entry){
+		int max = 0;
+		String mostPlayed = "";
+
 		//displays most played genre in album from most played song/s and finds most popular genre
 		System.out.println("Most played genre: ");
 
-		//finds most played genre 
+		for(int i = 0; i < 30; i++) {
+			albumList[entry].queueArray[i].song.timesPlayed = max;
+			albumList[entry].queueArray[i].song.genre = mostPlayed;
+
+    		if(albumList[entry].queueArray[i] != null) {
+
+				//System.out.println(i + ". " + albumList[entry].queueArray[i].song.name);
+
+				if (albumList[entry].queueArray[i].song.timesPlayed > max){
+
+					albumList[entry].queueArray[i].song.timesPlayed = max;
+					albumList[entry].queueArray[i].song.genre = mostPlayed;
+				}
+    		}
+		}
+		
+		System.out.println(mostPlayed);
 	}
 
-	public static void TotalAlbumLength(PriorityObject[] albumList, int entry){
+	public static void TotalAlbumLength(PriorityQueue[] albumList, int entry){
+		int totalLength = 0;
+
 		//displays total album length by adding total song length
 		System.out.println("Total album length: ");
 
 		//adds total song length and displays
+
+		for(int i = 0; i < 30; i++) {
+    		if(albumList[entry].queueArray[i] != null) {
+				totalLength+=albumList[entry].queueArray[i].song.songLength;
+    		}
+		}
+		
+		System.out.println(totalLength);
 	}
 }
