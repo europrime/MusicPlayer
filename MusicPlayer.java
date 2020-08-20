@@ -52,7 +52,7 @@ public class MusicPlayer{
                 case 3:
                 	//Displays all the current albums
                     DisplayAlbums(albumList);
-<<<<<<< HEAD
+                    break;
 				case 4:
 					//Ask the user what statistic they would like to enter
 					System.out.print("What statistics would you like?");
@@ -61,11 +61,7 @@ public class MusicPlayer{
 
 					//Displays statistics to user
 					Statistics(albumList, statInt);
-=======
                     break;
-                case 4:
-                	break;
->>>>>>> AlbumInteraction
                 case 5:
                 	break;
                 default: 
@@ -116,14 +112,10 @@ public class MusicPlayer{
     
     //Displays all the songs in the current album
     public static void DisplaySongs(PriorityQueue[] albumList, int entry) {
-<<<<<<< HEAD
-    	System.out.println("Current Albums: ");
     	//Loops through the songs of the array in the priority queue
-=======
     	System.out.println("Album: " + albumList[entry].albumName + "\n");
     	System.out.println("Current Songs: ");
     	//Loops through the songs of the arrayin the priority queue
->>>>>>> AlbumInteraction
     	for(int i = 0; i < 30; i++) {
     		if(albumList[entry].queueArray[i] != null) {
     			System.out.println(i + ". " + albumList[entry].queueArray[i].song.name);
@@ -140,6 +132,8 @@ public class MusicPlayer{
     			System.out.println(i + ". " + albumList[i].albumName);
     		}
     	}
+    	
+    	
     }
     
     
@@ -169,8 +163,17 @@ public class MusicPlayer{
     	
     	length = CheckDouble(input.nextLine());
     	
-<<<<<<< HEAD
-	}
+    	if(length != 0) {
+        	//Adding song into priority queue
+        	Song song = new Song(songName, artist, genre, length);
+        	albumList[entry].enqueue(song, albumList[entry].prority);
+        	AlbumEnter(albumList, entry);
+    	}else {
+    		System.out.println("Please enter a valid song length");
+    		AlbumEnter(albumList, entry);
+    	}
+    }
+	
 	
 	public static void Statistics(PriorityQueue[] albumList, int entry){
 		//Scanner
@@ -268,17 +271,6 @@ public class MusicPlayer{
 		
 		System.out.println(totalLength);
 	}
-=======
-    	if(length != 0) {
-        	//Adding song into priority queue
-        	Song song = new Song(songName, artist, genre, length);
-        	albumList[entry].enqueue(song, albumList[entry].prority);
-        	AlbumEnter(albumList, entry);
-    	}else {
-    		System.out.println("Please enter a valid song length");
-    		AlbumEnter(albumList, entry);
-    	}
-    }
     
     
     public static double CheckDouble(String parseDouble) {
@@ -302,5 +294,4 @@ public class MusicPlayer{
 	       	}
     	return 0;
     }
->>>>>>> AlbumInteraction
 }
