@@ -82,15 +82,18 @@ public class PriorityQueue {
 	     } 
 	}
 	
-	public void Delete(Song song) {
+	public void Delete(String song) {
 		PriorityObject[] tempArray = new PriorityObject[capacity];
 		int p = 0;
-		
+
 		for(int i = front; i < size; i++) {
-			if(song != dequeue()) {
-				PriorityObject tempObject = new PriorityObject(1, song);
+			if(!song.contains(peek().song.name)) {
+				PriorityObject tempObject = new PriorityObject(1, peek().song);
 				tempArray[p] = tempObject;
 				p++;
+				dequeue();
+			}else {
+				dequeue();
 			}
 		}
 		
@@ -114,9 +117,8 @@ public class PriorityQueue {
 	}
 	
 	//Peek
-	public void peek() {
-		//Prints the front item of the array
-		System.out.println(queueArray[front]);
+	public PriorityObject peek() {
+		return queueArray[front];
 	}
 	
 	//Returns the size of the array
