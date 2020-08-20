@@ -17,9 +17,10 @@ public class MusicPlayer{
         while(true){
         	//Asking user to enter input
             System.out.println("Please select an option: \n");
-            System.out.println("1. Create an album\n2. Enter a ablum\n3. Display Albums\n4. Show Statistics\n5. Exit");
-            int userInput = input.nextInt();
-            input.nextLine();
+            System.out.println("1. Create an album\n2. Enter a album\n3. Display Albums\n4. Show Statistics\n5. Exit");
+            int userInput = 0;
+            
+            userInput = CheckInt(input.nextLine());
             
             switch(userInput){
                 case 1:
@@ -34,21 +35,30 @@ public class MusicPlayer{
                 	
                 	break;
                 case 2:
+                	int albumInt = 0;
                 	//Asks the user what album they would like to enter
                 	System.out.println("What album would you like to enter?");
-                	int albumInt = input.nextInt();
-                	input.nextLine();
+
+                	albumInt = CheckInt(input.nextLine());
                 	
-                	//Enters the user into the album
-                	AlbumEnter(albumList, albumInt);
+                	//Incase the user enters the wrong album
+                	if(albumList[albumInt] == null) {
+                		System.out.println("Sorry! Album " + albumInt + " does not exist\n");
+                	}else {
+	                	//Enters the user into the album
+	                	AlbumEnter(albumList, albumInt);
+                	}
+                	break;
                 case 3:
                 	//Displays all the current albums
                     DisplayAlbums(albumList);
+                    break;
                 case 4:
+                	break;
                 case 5:
                 	break;
                 default: 
-                    continue;
+                   break;
             }
 
             if(userInput==8){
@@ -68,14 +78,25 @@ public class MusicPlayer{
     	
     	//Giving the user options
     	System.out.println("\n1.Add a Song\n2. Remove a song\n3. Play music\n4. Sort\n5.Go back");
-    	int userInput = input.nextInt();
-        input.nextLine();
+    	int userInput = 0;
+    	
+
+    	userInput = CheckInt(input.nextLine());
         
         //Allowing the user to continue adding,deleting or sorting
         while(true) {
 	        switch(userInput) {
 	        case 1:
 	        	AddSong(albumList, entry);
+	        break;
+	        case 2:
+	        	System.out.println("Enter the name of the song to delete");
+	        	String songDelete = input.nextLine();
+	        	
+	        	DeleteSong(albumList, entry, songDelete);
+	        	
+	        	
+	        	
 	        	break;
 	        }
         }
@@ -84,7 +105,8 @@ public class MusicPlayer{
     
     //Displays all the songs in the current album
     public static void DisplaySongs(PriorityQueue[] albumList, int entry) {
-    	System.out.println("Current Albums: ");
+    	System.out.println("Album: " + albumList[entry].albumName + "\n");
+    	System.out.println("Current Songs: ");
     	//Loops through the songs of the arrayin the priority queue
     	for(int i = 0; i < 30; i++) {
     		if(albumList[entry].queueArray[i] != null) {
@@ -104,6 +126,13 @@ public class MusicPlayer{
     	}
     }
     
+    
+  //Allows user to add songs
+    public static void DeleteSong(PriorityQueue[] albumList, int entry, String song) {
+    	albumList[entry].Delete(song);
+    	AlbumEnter(albumList, entry);
+    }
+    
     //Allows user to add songs
     public static void AddSong(PriorityQueue[] albumList, int entry) {
     	//SCanner
@@ -120,13 +149,41 @@ public class MusicPlayer{
     	String genre = input.nextLine();
     	
     	System.out.println("Please enter the length of the song");
-    	double length = input.nextDouble();
-    	input.nextLine();
+    	double length = 0;
     	
-    	//Adding song into priority queue
-    	Song song = new Song(songName, artist, genre, length);
-    	albumList[entry].enqueue(song, albumList[entry].prority);
-    	AlbumEnter(albumList, entry);
+    	length = CheckDouble(input.nextLine());
     	
+    	if(length != 0) {
+        	//Adding song into priority queue
+        	Song song = new Song(songName, artist, genre, length);
+        	albumList[entry].enqueue(song, albumList[entry].prority);
+        	AlbumEnter(albumList, entry);
+    	}else {
+    		System.out.println("Please enter a valid song length");
+    		AlbumEnter(albumList, entry);
+    	}
+    }
+    
+    
+    public static double CheckDouble(String parseDouble) {
+    	double inputAnswer;
+	    	try {
+	    		inputAnswer = Double.parseDouble(parseDouble);
+	    		return inputAnswer;
+	       	}catch(Exception e) {
+	       		System.out.println("Invalid number\n");
+	       	}
+    	return 0;
+    }
+    
+    public static int CheckInt(String parseInt) {
+    	int inputAnswer;
+	    	try {
+	    		inputAnswer = Integer.parseInt(parseInt);
+	    		return inputAnswer;
+	       	}catch(Exception e) {
+	       		System.out.println("Invalid number\n");
+	       	}
+    	return 0;
     }
 }
