@@ -1,16 +1,21 @@
+import java.io.Serializable;
+
 /**
  * 
  *  Stefano Iaconetti
  *  110023563
  *
  */
-public class PriorityQueue {
+public class PriorityQueue implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	//Variables
 	int front = 0;
 	int rear = 0;
 	int size = 0;
-	int prority = 0;
 	int capacity = 30;
 	String albumName;
 	PriorityObject[] queueArray;
@@ -52,63 +57,108 @@ public class PriorityQueue {
 	}
 	
 	//Selection sort
-	public void SelectionSort() {
-		//Loops through the queue
-		for(int i = 0; i < size - 1; i++) {
-			//Creating a min that is equal to i
-			int min = i;
+	public void SelectionSort(int sortBy) {
+		
+		switch(sortBy) {
+		case 1:
+			SortByPriority();
+			break;
+		case 2:
+			SortByLength();
+			break;
+		case 3:
+			SortByPlayed();
+			break;
 			
-			//J is always 1 ahead of i
-			for (int j = i + 1; j < size; j++) {
-				//If the data[i] is less than the data[min] then swap 
-				if(queueArray[i].priority < queueArray[min].priority) {
-					min = j;
-				}
-				
-				//Swapping
-				PriorityObject tempData = queueArray[i];
-				PriorityObject tempDataMin = queueArray[min];
-				
-				queueArray[i] = tempDataMin;
-				queueArray[min] = tempData;
-				
-			}
+			default:
+				System.out.println("Please enter a valid input");
+				break;
 		}
 		
+	}
+	
+	
+	
+	public void SortByPriority() {
+		 int n = 30;
+	        for (int i = 0; i < n-1; i++)
+	            for (int j = 0; j < n-i-1; j++)
+	                if (queueArray[j] != null && queueArray[j + 1] != null && queueArray[j].priority < queueArray[j+1].priority)
+	                {
+	                    // swap temp and arr[i]
+	                	PriorityObject temp = queueArray[j];
+	                    queueArray[j] = queueArray[j+1];
+	                    queueArray[j+1] = temp;
+	                    System.out.println("Workin");
+	                }
+	}
+	
+	public void SortByPlayed() {
 		
-		//Loops through changing priorities
-		 for (int i = front; i < rear; i++) {  
-			 queueArray[i].priority = i;
-	     } 
+		int n = 30;
+        for (int i = 0; i < n-1; i++)
+            for (int j = 0; j < n-i-1; j++)
+                if (queueArray[j] != null && queueArray[j + 1] != null && queueArray[j].song.timesPlayed < queueArray[j+1].song.timesPlayed)
+                {
+                    // swap temp and arr[i]
+                	PriorityObject temp = queueArray[j];
+                    queueArray[j] = queueArray[j+1];
+                    queueArray[j+1] = temp;
+                    System.out.println("Workin");
+                }
+	}
+	
+	public void SortByLength() {
+		int n = 30;
+        for (int i = 0; i < n-1; i++)
+            for (int j = 0; j < n-i-1; j++)
+                if (queueArray[j] != null && queueArray[j + 1] != null && queueArray[j].song.songLength < queueArray[j+1].song.songLength)
+                {
+                    // swap temp and arr[i]
+                	PriorityObject temp = queueArray[j];
+                    queueArray[j] = queueArray[j+1];
+                    queueArray[j+1] = temp;
+                    System.out.println("Workin");
+                }
 	}
 	
 	public void Delete(String song) {
 		PriorityObject[] tempArray = new PriorityObject[capacity];
-		int p = 0;
-
-		for(int i = front; i < size; i++) {
-			if(!song.contains(peek().song.name)) {
-				PriorityObject tempObject = new PriorityObject(1, peek().song);
-				tempArray[p] = tempObject;
+		int p = 1;
+		
+		
+		for(int i = 0; i < 30; i++) {
+			if(queueArray[i] != null && song.equals(queueArray[i].song.name)) {
+				queueArray[i] = null;
+			}else if(queueArray[i] != null) {
+				PriorityObject tempObject = new PriorityObject(p, queueArray[i].song);
+				tempArray[i] = tempObject;
 				p++;
-				dequeue();
-			}else {
-				dequeue();
 			}
 		}
 		
-		this.queueArray = tempArray;
+		queueArray = new PriorityObject[30];
+
+		int pos = 0;
+		
+		for(int i = 0; i < 30; i++) {
+			if(tempArray[i] != null) {
+				queueArray[pos] = tempArray[i];
+				pos++;
+			}
+		}
+		
+		front = 0;
+		size = p;
 		
 	}
-	
 	
 	//Dequeue
 	public Song dequeue() {
 		//If the list is empty then return an empty string
 		if(isEmpty()) {
 			return null;
-			
-			//Otherwise return the front and remove the front and change it to front + 1
+			//Otherwise return the front after increasing
 		}else {
 			front++;
 			size--;
