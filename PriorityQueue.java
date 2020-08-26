@@ -1,16 +1,8 @@
 import java.io.Serializable;
 
-/**
- * 
- *  Stefano Iaconetti
- *  110023563
- *
- */
+//Priority queue data structure
 public class PriorityQueue implements Serializable {
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	//Variables
 	int front = 0;
@@ -27,7 +19,7 @@ public class PriorityQueue implements Serializable {
 	}
 	
 	
-	//Inserts variable at the end of the queue
+	//Song is inserted at the end of the queue
 	public void enqueue(Song song, int priority) {
 		priority++;
 		PriorityObject tempData = new PriorityObject(priority, song);
@@ -36,7 +28,6 @@ public class PriorityQueue implements Serializable {
 			tempData.priority = 10;
 		}
 		
-		//If the queue is full then return
 		if(isFull()) {
 			return;
 		}else {
@@ -57,8 +48,8 @@ public class PriorityQueue implements Serializable {
 	}
 	
 	//Selection sort
-	public void SelectionSort(int sortBy) {
-		
+	public void BubbleSort(int sortBy) {
+		//Depending how the user wants to sort
 		switch(sortBy) {
 		case 1:
 			SortByPriority();
@@ -78,55 +69,61 @@ public class PriorityQueue implements Serializable {
 	}
 	
 	
-	
+	//Sorts by the songs priority on the queue
 	public void SortByPriority() {
-		 int n = 30;
-	        for (int i = 0; i < n-1; i++)
-	            for (int j = 0; j < n-i-1; j++)
-	                if (queueArray[j] != null && queueArray[j + 1] != null && queueArray[j].priority < queueArray[j+1].priority)
-	                {
-	                    // swap temp and arr[i]
-	                	PriorityObject temp = queueArray[j];
-	                    queueArray[j] = queueArray[j+1];
-	                    queueArray[j+1] = temp;
-	                    System.out.println("Workin");
-	                }
+		//Nested for loop
+		for (int i = 0; i < 30 - 1; i++) {
+			for (int j = 0; j < 30 - i - 1; j++) {
+				//If the objects exists and one is more than the other then they switch
+				if (queueArray[j] != null && queueArray[j + 1] != null && queueArray[j].priority < queueArray[j+1].priority){
+					PriorityObject temp = queueArray[j];
+	                queueArray[j] = queueArray[j+1];
+	                queueArray[j + 1] = temp;
+	                System.out.println("Workin");
+				}
+			}
+		}
 	}
 	
+	//Sorts by how many times the song was listened to
 	public void SortByPlayed() {
-		
-		int n = 30;
-        for (int i = 0; i < n-1; i++)
-            for (int j = 0; j < n-i-1; j++)
-                if (queueArray[j] != null && queueArray[j + 1] != null && queueArray[j].song.timesPlayed < queueArray[j+1].song.timesPlayed)
-                {
-                    // swap temp and arr[i]
+		//Nested for loop
+        for (int i = 0; i < 30 - 1; i++) {
+            for (int j = 0; j < 30 - i - 1; j++) {
+            	//If the objects exists and one is more than the other then they switch
+                if (queueArray[j] != null && queueArray[j + 1] != null && queueArray[j].song.timesPlayed < queueArray[j+1].song.timesPlayed){
                 	PriorityObject temp = queueArray[j];
-                    queueArray[j] = queueArray[j+1];
-                    queueArray[j+1] = temp;
+                    queueArray[j] = queueArray[j + 1];
+                    queueArray[j + 1] = temp;
                     System.out.println("Workin");
                 }
+            }
+        }
 	}
 	
+	//Sorts by the length of the song
 	public void SortByLength() {
-		int n = 30;
-        for (int i = 0; i < n-1; i++)
-            for (int j = 0; j < n-i-1; j++)
-                if (queueArray[j] != null && queueArray[j + 1] != null && queueArray[j].song.songLength < queueArray[j+1].song.songLength)
-                {
-                    // swap temp and arr[i]
+		//Nested for loop
+        for (int i = 0; i < 30 - 1; i++) {
+            for (int j = 0; j < 30 - i - 1; j++) {
+            	//If the objects exists and one is more than the other then they switch
+                if (queueArray[j] != null && queueArray[j + 1] != null && queueArray[j].song.songLength < queueArray[j+1].song.songLength){
                 	PriorityObject temp = queueArray[j];
-                    queueArray[j] = queueArray[j+1];
-                    queueArray[j+1] = temp;
+                    queueArray[j] = queueArray[j+ 1];
+                    queueArray[j + 1] = temp;
                     System.out.println("Workin");
                 }
+            }
+        }
 	}
 	
+	//Delete method deletes the song the user wanted to delete
 	public void Delete(String song) {
+		//Creating a temp array
 		PriorityObject[] tempArray = new PriorityObject[capacity];
 		int p = 1;
 		
-		
+		//Loops through the list and adds the songs that do not equal what the user wants to remove to the temp array
 		for(int i = 0; i < 30; i++) {
 			if(queueArray[i] != null && song.equals(queueArray[i].song.name)) {
 				queueArray[i] = null;
@@ -137,10 +134,12 @@ public class PriorityQueue implements Serializable {
 			}
 		}
 		
+		
+		
 		queueArray = new PriorityObject[30];
-
 		int pos = 0;
 		
+		//Songs are now adding to a new array
 		for(int i = 0; i < 30; i++) {
 			if(tempArray[i] != null) {
 				queueArray[pos] = tempArray[i];
@@ -153,6 +152,15 @@ public class PriorityQueue implements Serializable {
 		
 	}
 	
+	
+	//Method to dequeue the entire album
+	public void DequeueAll() {
+		for(int i = 0; i < 30; i++) {
+			dequeue();
+			System.out.println("Worked");
+		}
+	}
+	
 	//Dequeue
 	public Song dequeue() {
 		//If the list is empty then return an empty string
@@ -162,7 +170,7 @@ public class PriorityQueue implements Serializable {
 		}else {
 			front++;
 			size--;
-			return queueArray[front - 1].song;
+			return queueArray[front].song;
 		}
 	}
 	
